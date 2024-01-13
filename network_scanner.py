@@ -13,6 +13,10 @@ def scan(ip):
     # Set destination MAC to broadcast MAC --> destination is set in the ethernet part of the packet
     broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
     arp_request_broadcast= broadcast/arp_request
-    print(arp_request_broadcast.summary())
+    # srp allows to send packets with a custom ehternet part
+    answered, unanswered = scapy.srp(arp_request_broadcast, timeout=1)
+    print(answered.summary())
 
 scan("192.168.1.1/24")
+
+# Send packet and receive response
